@@ -24,7 +24,7 @@ public class ChampionGGAPIFactory {
 	private final RateLimiter rateLimiter;
 
 	public ChampionGGAPIFactory(String apiKey) {
-		this(apiKey, 10);
+		this(apiKey, 0);
 	}
 
 	public ChampionGGAPIFactory(String apiKey, double maxRequestsPerSecond) {
