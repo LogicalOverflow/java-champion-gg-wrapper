@@ -8,7 +8,31 @@ A simple Java wrapper for the ChampionGG API (http://api.champion.gg/docs/)
 * Complete: Maybe also not strictly a feature but all API methods provided by the ChampionGG API are currently implemented.
 
 ## Usage
-The usage is pretty straight forward:
+First you need to either download the jar from the `mvn-repo` branch and add it to your project or add it as a depencency to your pom. To do that add the repository:
+```
+<repositories>
+	<repository>
+		<id>java-champion-gg-wrapper-mvn-repo</id>
+		<url>https://raw.github.com/LogicalOverflow/java-champion-gg-wrapper/mvn-repo/</url>
+		<snapshots>
+			<enabled>true</enabled>
+			<updatePolicy>always</updatePolicy>
+		</snapshots>
+	</repository>
+</repositories>
+```
+And the the depenency:
+```
+<dependencies>
+	<dependency>
+		<groupId>com.lvack.champion-gg-wrapper</groupId>
+		<artifactId>champion-gg-wrapper</artifactId>
+		<version>1.0</version>
+	</dependency>
+</dependencies>
+```
+
+Then the usage is pretty straight forward:
 ```
 	ChampionGGAPIFactory factory = new ChampionGGAPIFactory("API_KEY", 10); // do at most 10 requests per second
 	ChampionGGAPI api = factory.buildChampionGGAPI();
