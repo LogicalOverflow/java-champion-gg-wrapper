@@ -2,8 +2,8 @@
 A simple Java wrapper for the ChampionGG API (http://api.champion.gg/docs/)
 
 ## Features
-* Automatic rate limiting: All API calles can easily be rate limited. All API instances created with the same factory share one rate limiter. The number of requests per second can freely be set as the second parameter of the factory constructor. A value of 0 or a negative value disables the rate limiting. The default is 10 request per second.
-* Asyncronous calls: Calls return imidiently and other calculation can be done while waiting for the result (or more API calls can be started). The response provides a `waitForResponse` method to easily wait for an result once its required.
+* Automatic rate limiting: All API calles can easily be rate limited. All API instances created with the same factory share one rate limiter. The number of requests per second can freely be set as the second parameter of the factory constructor. A value of 0 or a negative value disables the rate limiting. The default is no rate limiting.
+* Asyncronous calls: Calls return immediately and other calculation can be done while waiting for the result (or more API calls can be started). The response provides a `waitForResponse` method to easily wait for an result once its required.
 * Fully tested: Maybe not strictly a feature but all API methods get tested with mocked data (which was previously directly pulled from the API)
 * Complete: Maybe also not strictly a feature but all API methods provided by the ChampionGG API are currently implemented.
 
@@ -33,7 +33,7 @@ And the the depenency:
 ```
 
 Then the usage is pretty straight forward:
-```
+```java
 ChampionGGAPIFactory factory = new ChampionGGAPIFactory("API_KEY", 10); // do at most 10 requests per second
 ChampionGGAPI api = factory.buildChampionGGAPI();
 
