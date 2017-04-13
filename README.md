@@ -56,6 +56,6 @@ if (response.isSuccess()) {
 	if (response.isFailure())
 		response.getError().printStackTrace(); // an exception was thrown somewhere in the process
 	if (response.isInvalidAPIKey()) System.out.println("Invalid API key!");
-	}
+}
 ```
 
