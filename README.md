@@ -11,24 +11,24 @@ A simple Java wrapper for the ChampionGG API (http://api.champion.gg/docs/)
 First you need to either download the jar from the `mvn-repo` branch and add it to your project or add it as a depencency to your pom. To do that add the repository:
 ```
 <repositories>
-	<repository>
-		<id>java-champion-gg-wrapper-mvn-repo</id>
-		<url>https://raw.github.com/LogicalOverflow/java-champion-gg-wrapper/mvn-repo/</url>
-		<snapshots>
-			<enabled>true</enabled>
-			<updatePolicy>always</updatePolicy>
-		</snapshots>
-	</repository>
+    <repository>
+        <id>java-champion-gg-wrapper-mvn-repo</id>
+        <url>https://raw.github.com/LogicalOverflow/java-champion-gg-wrapper/mvn-repo/</url>
+        <snapshots>
+            <enabled>true</enabled>
+            <updatePolicy>always</updatePolicy>
+        </snapshots>
+    </repository>
 </repositories>
 ```
 And the the depenency:
 ```
 <dependencies>
-	<dependency>
-		<groupId>com.lvack.champion-gg-wrapper</groupId>
-		<artifactId>champion-gg-wrapper</artifactId>
-		<version>1.0</version>
-	</dependency>
+    <dependency>
+        <groupId>com.lvack.champion-gg-wrapper</groupId>
+        <artifactId>champion-gg-wrapper</artifactId>
+        <version>1.0</version>
+    </dependency>
 </dependencies>
 ```
 
@@ -41,21 +41,25 @@ APIResponse<List<HighLevelChampionData>> response = api.getHighLevelChampionData
 response.waitForResponse();
 
 if (response.isSuccess()) {
-	List<HighLevelChampionData> content = response.getContent();
-	HighLevelChampionData data = content.get(0);
+    List<HighLevelChampionData> content = response.getContent();
+    HighLevelChampionData data = content.get(0);
 
-	System.out.println("Champion: " + data.getName());
-	for (RoleData roleData : data.getRoles()) {
-		System.out.println("- Position: " + roleData.getRole());
-		System.out.println(String.format("  - Played %04.1f%% (%d games) of the time in this role",
-				roleData.getPercentPlayed(), roleData.getGameCount()));
+    System.out.println("Champion: " + data.getName());
+    for (RoleData roleData : data.getRoles()) {
+        System.out.println("- Position: " + roleData.getRole());
+        System.out.println(String.format("  - Played %04.1f%% (%d games) of the time in this role",
+            roleData.getPercentPlayed(), roleData.getGameCount()));
 	}
 } else {
 	// something went wrong
-	if (response.isAPIError()) System.out.println(response.getErrorResponse()); // the api returned an error
-	if (response.isFailure())
-		response.getError().printStackTrace(); // an exception was thrown somewhere in the process
-	if (response.isInvalidAPIKey()) System.out.println("Invalid API key!");
+    
+    // the api returned an error
+    if (response.isAPIError()) System.out.println(response.getErrorResponse());
+    
+    // an exception was thrown somewhere in the process
+    if (response.isFailure()) response.getError().printStackTrace();
+	
+    if (response.isInvalidAPIKey()) System.out.println("Invalid API key!");
 }
 ```
 
