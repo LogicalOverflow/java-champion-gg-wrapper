@@ -8,7 +8,7 @@ A simple Java wrapper for the ChampionGG API (http://api.champion.gg/docs/)
 * Complete: Maybe also not strictly a feature but all API methods provided by the ChampionGG API are currently implemented.
 
 ## Usage
-First you need to either download the jar from the `mvn-repo` branch and add it to your project or add it as a depencency to your pom. To do that add the repository:
+First you need add it as a depencency to your pom. To do that add the repository:
 ```
 <repositories>
 	<repository>
@@ -31,6 +31,13 @@ And the the depenency:
 	</dependency>
 </dependencies>
 ```
+
+If you do not use maven, the jars can be found in the `mvn-repo` branch. If you use these directly be aware that they do not contain libraries this project depends on. You might need to also add them:
+* retrofit2 (version 2.2.0; with converter-gson and adapter-guava)
+* gson (version 2.8.0)
+* guava (version 21.0)
+* commons-io (version 2.5)
+* commons-lang3 (version 3.5)
 
 Then the usage is pretty straight forward:
 ```java
