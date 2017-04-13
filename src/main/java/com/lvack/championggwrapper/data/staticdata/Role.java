@@ -2,11 +2,6 @@ package com.lvack.championggwrapper.data.staticdata;
 
 import com.google.gson.annotations.SerializedName;
 
-/**
- * RoleClass for champion-gg-wrapper
- *
- * @author Leon Vack - TWENTY |20
- */
 
 public enum Role {
 	@SerializedName("Top")TOP,

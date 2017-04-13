@@ -8,11 +8,6 @@ import lombok.ToString;
 
 import java.util.List;
 
-/**
- * CommonRunesClass for champion-gg-wrapper
- *
- * @author Leon Vack - TWENTY |20
- */
 
 @Data @EqualsAndHashCode(callSuper = true) @ToString(callSuper = true)
 public class CommonRunes extends WinRateGameCountRole {

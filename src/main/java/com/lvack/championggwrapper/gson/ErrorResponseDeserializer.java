@@ -10,11 +10,6 @@ import com.lvack.championggwrapper.data.error.NormalErrorResponse;
 
 import java.lang.reflect.Type;
 
-/**
- * ErrorResponseDeserializerClass for champion-gg-wrapper
- *
- * @author Leon Vack - TWENTY |20
- */
 
 public class ErrorResponseDeserializer implements JsonDeserializer<ErrorResponse> {
 	@Override

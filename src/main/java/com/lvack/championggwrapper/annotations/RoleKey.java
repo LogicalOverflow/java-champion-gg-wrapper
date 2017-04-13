@@ -5,12 +5,6 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-/**
- * RoleKeyClass for champion-gg-wrapper
- *
- * @author Leon Vack - TWENTY |20
- */
-
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.PARAMETER)

@@ -5,11 +5,6 @@ import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 import java.util.concurrent.TimeUnit;
 
-/**
- * MockResponseDeSerializerClass for champion-gg-wrapper
- *
- * @author Leon Vack - TWENTY |20
- */
 
 public class MockResponseDeSerializer implements JsonDeserializer<MockResponse>, JsonSerializer<MockResponse>, InstanceCreator<MockResponse> {
 	@Override

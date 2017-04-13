@@ -3,11 +3,6 @@ package com.lvack.championggwrapper.retrofit.proxies;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
-/**
- * RateLimiterProxyClass for champion-gg-wrapper
- *
- * @author Leon Vack - TWENTY |20
- */
 
 abstract class AbstractRetrofitProxy<T> {
 	private final T wrappedInstance;

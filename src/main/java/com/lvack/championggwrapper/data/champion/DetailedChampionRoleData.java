@@ -6,20 +6,15 @@ import com.lvack.championggwrapper.data.base.item.TrinketData;
 import com.lvack.championggwrapper.data.base.masteries.Masteries;
 import com.lvack.championggwrapper.data.base.matchup.MatchupData;
 import com.lvack.championggwrapper.data.base.ranking.ChampionRankingData;
+import com.lvack.championggwrapper.data.base.ranking.RankingData;
 import com.lvack.championggwrapper.data.base.rune.RuneSetData;
 import com.lvack.championggwrapper.data.base.skill.SkillsData;
-import com.lvack.championggwrapper.data.base.ranking.RankingData;
-import com.lvack.championggwrapper.data.staticdata.Role;
 import com.lvack.championggwrapper.data.base.summoner.SummonerPairsData;
+import com.lvack.championggwrapper.data.staticdata.Role;
 import lombok.Data;
 
 import java.util.List;
 
-/**
- * DetailedChampionDataClass for champion-gg-wrapper
- *
- * @author Leon Vack - TWENTY |20
- */
 
 @Data
 public class DetailedChampionRoleData {

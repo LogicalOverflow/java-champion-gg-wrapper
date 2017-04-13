@@ -1,10 +1,5 @@
 package com.lvack.championggwrapper.data.staticdata;
 
-/**
- * StatOrderClass for champion-gg-wrapper
- *
- * @author Leon Vack - TWENTY |20
- */
 
 public enum StatOrder {
 	MOST_BANNED("mostBanned"),

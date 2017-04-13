@@ -5,11 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-/**
- * ApiResponseClass for champion-gg-wrapper
- *
- * @author Leon Vack - TWENTY |20
- */
 
 @ToString
 public class APIResponse<R> {

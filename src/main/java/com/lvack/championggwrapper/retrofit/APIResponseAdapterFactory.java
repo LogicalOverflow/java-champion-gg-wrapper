@@ -1,23 +1,13 @@
 package com.lvack.championggwrapper.retrofit;
 
-import com.google.gson.JsonParseException;
 import com.google.gson.JsonSyntaxException;
-import com.google.gson.stream.MalformedJsonException;
-import com.lvack.championggwrapper.data.error.AdvancedErrorResponse;
 import com.lvack.championggwrapper.data.error.ErrorResponse;
-import com.lvack.championggwrapper.data.error.NormalErrorResponse;
 import okhttp3.ResponseBody;
 import retrofit2.*;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-
-/**
- * APIResponseAdapterFactoryClass for champion-gg-wrapper
- *
- * @author Leon Vack - TWENTY |20
- */
 
 
 public class APIResponseAdapterFactory extends CallAdapter.Factory {

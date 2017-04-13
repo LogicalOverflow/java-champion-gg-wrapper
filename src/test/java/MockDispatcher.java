@@ -8,17 +8,11 @@ import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.RecordedRequest;
 import org.junit.Assert;
 
-import javax.swing.*;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-/**
- * MockDispatcherClass for champion-gg-wrapper
- *
- * @author Leon Vack - TWENTY |20
- */
 
 public class MockDispatcher extends Dispatcher {
 	private static final String API_KEY = "mock-api-key";

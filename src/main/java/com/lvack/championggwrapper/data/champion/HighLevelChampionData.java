@@ -6,12 +6,6 @@ import lombok.Data;
 
 import java.util.List;
 
-/**
- * BasicChampionDataClass for champion-gg-wrapper
- *
- * @author Leon Vack - TWENTY |20
- */
-
 
 @Data
 public class HighLevelChampionData {

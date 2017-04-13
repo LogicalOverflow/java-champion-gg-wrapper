@@ -3,19 +3,14 @@ package com.lvack.championggwrapper.gson;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.lvack.championggwrapper.data.error.ErrorResponse;
+import com.lvack.championggwrapper.data.staticdata.ChampionRoleStat;
 import com.lvack.championggwrapper.data.staticdata.ChampionStat;
 import com.lvack.championggwrapper.data.staticdata.Role;
-import com.lvack.championggwrapper.data.staticdata.ChampionRoleStat;
 import com.lvack.championggwrapper.data.staticdata.RoleStat;
 
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * GsonProviderClass for champion-gg-wrapper
- *
- * @author Leon Vack - TWENTY |20
- */
 
 public class GsonProvider {
 	private static final List<Class<? extends Enum>> ENUMS = Arrays.asList(Role.class,
@@ -29,7 +24,8 @@ public class GsonProvider {
 	public static GsonBuilder getGsonBuilder() {
 		GsonBuilder gsonBuilder = new GsonBuilder().enableComplexMapKeySerialization()
 				.registerTypeAdapter(ErrorResponse.class, new ErrorResponseDeserializer());
-		for (Class<? extends Enum> anEnum : ENUMS) gsonBuilder.registerTypeAdapter(anEnum, new EnumDeSerializer<>(anEnum));
+		for (Class<? extends Enum> anEnum : ENUMS)
+			gsonBuilder.registerTypeAdapter(anEnum, new EnumDeSerializer<>(anEnum));
 		return gsonBuilder;
 	}
 }

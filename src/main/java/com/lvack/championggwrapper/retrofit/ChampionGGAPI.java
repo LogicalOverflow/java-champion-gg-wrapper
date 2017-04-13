@@ -22,11 +22,6 @@ import retrofit2.http.Query;
 
 import java.util.List;
 
-/**
- * ChampionClass for champion-gg-wrapper
- *
- * @author Leon Vack - TWENTY |20
- */
 
 public interface ChampionGGAPI {
 	@GET("/champion") @Permits

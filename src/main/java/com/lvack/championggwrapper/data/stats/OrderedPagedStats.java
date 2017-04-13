@@ -5,11 +5,6 @@ import lombok.Data;
 
 import java.util.List;
 
-/**
- * PagedResultClass for champion-gg-wrapper
- *
- * @author Leon Vack - TWENTY |20
- */
 
 @Data
 public class OrderedPagedStats {

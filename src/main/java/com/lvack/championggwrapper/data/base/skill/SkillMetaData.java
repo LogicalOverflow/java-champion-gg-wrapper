@@ -2,11 +2,6 @@ package com.lvack.championggwrapper.data.base.skill;
 
 import lombok.Data;
 
-/**
- * SkillMetaDataClass for champion-gg-wrapper
- *
- * @author Leon Vack - TWENTY |20
- */
 
 @Data
 public class SkillMetaData {

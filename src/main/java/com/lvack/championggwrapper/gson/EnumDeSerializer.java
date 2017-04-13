@@ -6,11 +6,6 @@ import com.google.gson.annotations.SerializedName;
 import java.lang.reflect.Type;
 import java.util.Objects;
 
-/**
- * RoleDeserializerClass for champion-gg-wrapper
- *
- * @author Leon Vack - TWENTY |20
- */
 
 public class EnumDeSerializer<T extends Enum> implements JsonDeserializer<T>, JsonSerializer<T> {
 	private final Class<T> enumClass;

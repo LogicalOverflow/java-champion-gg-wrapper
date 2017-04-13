@@ -1,10 +1,5 @@
 package com.lvack.championggwrapper.data.staticdata;
 
-/**
- * RoleStatOrderClass for champion-gg-wrapper
- *
- * @author Leon Vack - TWENTY |20
- */
 
 public enum RoleStatOrder {
 	MOST_IMPROVED("mostImproved"),

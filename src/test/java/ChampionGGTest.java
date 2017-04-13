@@ -1,10 +1,9 @@
 import com.google.gson.*;
 import com.lvack.championggwrapper.ChampionGGAPIFactory;
 import com.lvack.championggwrapper.annotations.*;
-import com.lvack.championggwrapper.data.error.ErrorResponse;
 import com.lvack.championggwrapper.data.champion.HighLevelChampionData;
+import com.lvack.championggwrapper.data.error.ErrorResponse;
 import com.lvack.championggwrapper.data.staticdata.Role;
-import com.lvack.championggwrapper.data.staticdata.RoleStat;
 import com.lvack.championggwrapper.data.staticdata.RoleStatOrder;
 import com.lvack.championggwrapper.data.staticdata.StatOrder;
 import com.lvack.championggwrapper.gson.GsonProvider;
@@ -26,12 +25,6 @@ import java.lang.reflect.Parameter;
 import java.lang.reflect.ParameterizedType;
 import java.util.*;
 import java.util.stream.Collectors;
-
-/**
- * MainClass for champion-gg-wrapper
- *
- * @author Leon Vack - TWENTY |20
- */
 
 
 @DisplayName("ChampionGGAPI tests") class ChampionGGTest {

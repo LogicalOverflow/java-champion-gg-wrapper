@@ -8,11 +8,6 @@ import lombok.ToString;
 
 import java.util.List;
 
-/**
- * RuneSetClass for champion-gg-wrapper
- *
- * @author Leon Vack - TWENTY |20
- */
 
 @Data @EqualsAndHashCode(callSuper = true) @ToString(callSuper = true)
 public class RuneSet extends WinRateGameCount {

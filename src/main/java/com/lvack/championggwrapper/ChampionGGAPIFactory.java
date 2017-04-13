@@ -11,11 +11,6 @@ import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-/**
- * ChampionGGClass for champion-gg-wrapper
- *
- * @author Leon Vack - TWENTY |20
- */
 
 public class ChampionGGAPIFactory {
 	@VisibleForTesting
