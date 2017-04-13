@@ -34,28 +34,28 @@ And the the depenency:
 
 Then the usage is pretty straight forward:
 ```
-	ChampionGGAPIFactory factory = new ChampionGGAPIFactory("API_KEY", 10); // do at most 10 requests per second
-	ChampionGGAPI api = factory.buildChampionGGAPI();
+ChampionGGAPIFactory factory = new ChampionGGAPIFactory("API_KEY", 10); // do at most 10 requests per second
+ChampionGGAPI api = factory.buildChampionGGAPI();
 
-	APIResponse<List<HighLevelChampionData>> response = api.getHighLevelChampionData();
-	response.waitForResponse();
+APIResponse<List<HighLevelChampionData>> response = api.getHighLevelChampionData();
+response.waitForResponse();
 
-	if (response.isSuccess()) {
-		List<HighLevelChampionData> content = response.getContent();
-		HighLevelChampionData data = content.get(0);
+if (response.isSuccess()) {
+	List<HighLevelChampionData> content = response.getContent();
+	HighLevelChampionData data = content.get(0);
 
-		System.out.println("Champion: " + data.getName());
-		for (RoleData roleData : data.getRoles()) {
-			System.out.println("- Position: " + roleData.getRole());
-			System.out.println(String.format("  - Played %04.1f%% (%d games) of the time in this role",
-					roleData.getPercentPlayed(), roleData.getGameCount()));
-		}
-	} else {
-		// something went wrong
-		if (response.isAPIError()) System.out.println(response.getErrorResponse()); // the api returned an error
-		if (response.isFailure())
-			response.getError().printStackTrace(); // an exception was thrown somewhere in the process
-		if (response.isInvalidAPIKey()) System.out.println("Invalid API key!");
+	System.out.println("Champion: " + data.getName());
+	for (RoleData roleData : data.getRoles()) {
+		System.out.println("- Position: " + roleData.getRole());
+		System.out.println(String.format("  - Played %04.1f%% (%d games) of the time in this role",
+				roleData.getPercentPlayed(), roleData.getGameCount()));
+	}
+} else {
+	// something went wrong
+	if (response.isAPIError()) System.out.println(response.getErrorResponse()); // the api returned an error
+	if (response.isFailure())
+		response.getError().printStackTrace(); // an exception was thrown somewhere in the process
+	if (response.isInvalidAPIKey()) System.out.println("Invalid API key!");
 	}
 ```
 
