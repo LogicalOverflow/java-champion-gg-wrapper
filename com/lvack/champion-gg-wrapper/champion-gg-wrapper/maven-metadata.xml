@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>com.lvack.champion-gg-wrapper</groupId>
+  <artifactId>champion-gg-wrapper</artifactId>
+  <versioning>
+    <versions>
+      <version>1.0-SNAPSHOT</version>
+    </versions>
+    <lastUpdated>20170413160919</lastUpdated>
+  </versioning>
+</metadata>
