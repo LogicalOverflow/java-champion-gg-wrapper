@@ -5,6 +5,7 @@ import com.lvack.championggwrapper.data.error.ErrorResponse;
 import com.lvack.championggwrapper.data.error.NormalErrorResponse;
 import com.lvack.championggwrapper.gson.EnumDeSerializer;
 import com.lvack.championggwrapper.gson.ErrorResponseDeserializer;
+import com.lvack.championggwrapper.gson.GsonProvider;
 import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -42,8 +43,22 @@ class DeSerializerTest {
 		Assert.assertEquals("the deserialized normal response is not equal to the expected one",
 			normalErrorResponse, gson.fromJson(successJsonNormal, ErrorResponse.class));
 
+		ErrorResponse actual = gson.fromJson(successJsonAdvanced, ErrorResponse.class);
 		Assert.assertEquals("the deserialized advanced response is not equal to the expected one",
-			advancedErrorResponse, gson.fromJson(successJsonAdvanced, ErrorResponse.class));
+			advancedErrorResponse, actual);
+
+		AdvancedErrorResponse actualAdvancedErrorResponse = (AdvancedErrorResponse) actual;
+
+		Assert.assertEquals("actual advanced error response returned has an invalid error",
+			normalErrorResponse.getError(), actualAdvancedErrorResponse.getError());
+
+		Assert.assertEquals("actual advanced error response returned has an invalid message",
+			normalErrorResponse.getMessage(), actualAdvancedErrorResponse.getMessage());
+
+		Assert.assertEquals("actual advanced error response returned has an invalid stack",
+			normalErrorResponse.getStack(), actualAdvancedErrorResponse.getStack());
+
+
 	}
 
 	@Test
@@ -72,6 +87,16 @@ class DeSerializerTest {
 
 		Assertions.assertThrows(JsonParseException.class,
 			() -> gson.fromJson(new JsonArray(), TestEnum.class));
+	}
+
+	@Test
+	void testGsonProvider() {
+		Assert.assertNotNull("gson provider did not provide a gson builder", GsonProvider.getGsonBuilder());
+		Assert.assertNotNull("gson provider did not provide a gson instance", GsonProvider.getGson());
+		Assert.assertEquals("gson provider did not provide the same gson instance twice",
+			GsonProvider.getGson(), GsonProvider.getGson());
+
+		Assertions.assertThrows(UnsupportedOperationException.class, GsonProvider::new);
 	}
 
 	private enum TestEnum {

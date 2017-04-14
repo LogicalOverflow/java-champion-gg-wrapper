@@ -5,9 +5,34 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.lvack</groupId>
-	<artifactId>com.lvack.champion-gg-wrapper</artifactId>
+	<artifactId>champion-gg-wrapper</artifactId>
 	<packaging>jar</packaging>
 	<version>1.0</version>
+
+	<name>${project.groupId}:${project.artifactId}</name>
+	<description>A simple Java wrapper for the ChampionGG API (http://api.champion.gg/docs/)</description>
+	<url>https://github.com/LogicalOverflow/java-champion-gg-wrapper</url>
+
+	<licenses>
+		<license>
+			<name>Apache License, Version 2.0</name>
+			<url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+		</license>
+	</licenses>
+
+	<developers>
+		<developer>
+			<name>Leon Vack</name>
+			<email>dev@lvack.com</email>
+		</developer>
+	</developers>
+
+	<scm>
+		<connection>scm:git@github.com:LogicalOverflow/java-champion-gg-wrapper.git</connection>
+		<developerConnection>scm:git@github.com:LogicalOverflow/java-champion-gg-wrapper.git</developerConnection>
+		<url>github.com:LogicalOverflow/java-champion-gg-wrapper.git</url>
+	</scm>
+
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
