@@ -19,13 +19,13 @@ deploy:
   script: "cp .travis.settings.xml $HOME/.m2/settings.xml && mvn deploy"
   skip_cleanup: true
   on:
-    tags: true
+    branch: master
 
   provider: releases
   script: cp .travis.settings.xml $HOME/.m2/settings.xml && mvn deploy
   skip_cleanup: true
   on:
-    tags: true
+    branch: master
   api-key:
     secure: j2vcT58Zp1A65r6S3TN3LcpTCvDLNBldG8IhtLEy5EvURAFIKegCPhnK1eDoVtRGbiPv/9J1oH1EkM1K7r4R1WPW/zMErI4ihmfHJ4dlaBbnBX3pjy5eGvTUon62Egyc04yNWjkjLwKX4Sjy1FC1/QiYFECqan8mIk9o4/HGNafU81kUdsBWys/831hHJK3wN/Ir/glO3+UgNJebZIgh83OtnSF4UOuG6+vgxLxc7SDbqHaljqle8fWEnUR4t/YYxClRuPVDrd+LXVHR4t5St5DfVr2Y0122BmnCy4kJ+Woa8AaZCxMXfAlWxwrcpSV1ejZ0kyXRgua1m1An2dpo4yNXrhKDwT8mfOSVtxkBb5HxyTu/Oit3oh1gmJ2tO+La/ZS7jzwfkxZK2gOkSeR3Zp6OoxdzFNIPo8EvNIYX2BLNijAz9pxdiVdxtjiAONpzT7cO5D/m3+KMmciwcA1tLAkiqibtlnuKKV63mc9U0noT3YEqjf3ORbt5+eROxuHGVQCtNuyZ+D4xhW+N6R6ea1de8ECj5fbspchtaYMvAk3aXNj/QOP4SRbPWVfsZt0aDrIDL6VtmyHt+RKCtYOFco4DCNWK/syhm25ULyO8cPpLF1CtErz3UTbvztHi+44+jxDSubP9vXQZhu6A7ROvX1ZEs+3448ET1O+hmz7s+9I=
   file:
