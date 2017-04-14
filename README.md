@@ -27,7 +27,7 @@ And the the depenency:
 ```
 <dependencies>
     <dependency>
-        <groupId>com.lvack.champion-gg-wrapper</groupId>
+        <groupId>com.lvack</groupId>
         <artifactId>champion-gg-wrapper</artifactId>
         <version>1.0</version>
     </dependency>
