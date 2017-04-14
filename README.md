@@ -11,7 +11,7 @@ A simple Java wrapper for the ChampionGG API (http://api.champion.gg/docs/)
 
 ## Usage
 First you need add it as a depencency to your pom. To do that add the repository:
-```
+```xml
 <repositories>
     <repository>
         <id>java-champion-gg-wrapper-mvn-repo</id>
@@ -24,7 +24,7 @@ First you need add it as a depencency to your pom. To do that add the repository
 </repositories>
 ```
 And the the depenency:
-```
+```xml
 <dependencies>
     <dependency>
         <groupId>com.lvack</groupId>
