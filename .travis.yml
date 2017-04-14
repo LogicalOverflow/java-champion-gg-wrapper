@@ -1,10 +1,18 @@
 sudo: false
 language: java
-ervices:
-- docker
+jdk:
+  - oraclejdk8
+
+services:
+  - docker
 cache:
   directories:
   - "$HOME/.cache"
+
+addons:
+  apt:
+    packages:
+      - oracle-java8-installer
 
 install: true
 
