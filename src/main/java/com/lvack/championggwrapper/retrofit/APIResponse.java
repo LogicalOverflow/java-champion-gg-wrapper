@@ -7,13 +7,21 @@ import lombok.ToString;
 
 
 @ToString
-public class APIResponse<R> {
-	private transient final Object lock = new Object();
+public class APIResponse<R> implements Waitable {
+	private transient final Object lock;
 	@Getter @Setter private R content;
 	@Getter @Setter private Throwable error;
 	@Getter @Setter private ErrorResponse errorResponse;
 	@Getter @Setter private int responseCode;
 	@Getter private State state = State.IN_PROGRESS;
+
+	public APIResponse() {
+		lock = new Object();
+	}
+
+	protected APIResponse(Object lock) {
+		this.lock = lock;
+	}
 
 	public void waitForResponse() {
 		synchronized (lock) {
@@ -27,33 +35,37 @@ public class APIResponse<R> {
 	}
 
 	public boolean isComplete() {
-		return state != State.IN_PROGRESS;
+		return getState() != State.IN_PROGRESS;
 	}
 
 	public boolean isSuccess() {
-		return state == State.SUCCESS;
+		return getState() == State.SUCCESS;
 	}
 
 	public boolean isAPIError() {
-		return state == State.API_ERROR;
+		return getState() == State.API_ERROR;
 	}
 
 	public boolean isFailure() {
-		return state == State.FAILURE;
+		return getState() == State.FAILURE;
 	}
 
 	public boolean isInvalidAPIKey() {
-		return state == State.INVALID_API_KEY;
+		return getState() == State.INVALID_API_KEY;
 	}
 
-	void setState(State state) {
+	public void setState(State state) {
 		this.state = state;
-		synchronized (lock) {
-			lock.notifyAll();
-		}
+		notifyWaitingClients();
 	}
 
 	public enum State {
 		IN_PROGRESS, SUCCESS, API_ERROR, FAILURE, INVALID_API_KEY
+	}
+
+	public void notifyWaitingClients() {
+		synchronized (lock) {
+			lock.notifyAll();
+		}
 	}
 }

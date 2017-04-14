@@ -1,1 +1,1 @@
-{"body": "[{\"games\":214,\"winPercent\":48.11,\"items\":[3142,3111,3071,3742,3147,3026],\"role\":\"Top\"},{\"games\":71,\"winPercent\":48.8,\"items\":[1400,3117,3071,3142,3026,3742],\"role\":\"Jungle\"}]", "status": "HTTP/1.1 200 OK"}
+{"status": "HTTP/1.1 200 OK", "body": "[{\"games\":66,\"winPercent\":48.45,\"items\":[1400,3117,3071,3742,3812,3026],\"role\":\"Jungle\"},{\"games\":280,\"winPercent\":51.71,\"items\":[3142,3111,3071,3742,3026,3156],\"role\":\"Top\"}]"}

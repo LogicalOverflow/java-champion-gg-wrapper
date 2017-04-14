@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 public abstract class WinRateGameCount {
 	@SerializedName("winPercent")
-	private double winPercent;
+	private Double winPercent;
 	@SerializedName("games")
-	private int gameCount;
+	private Integer gameCount;
 }

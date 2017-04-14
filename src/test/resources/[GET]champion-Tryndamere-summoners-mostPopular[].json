@@ -1,1 +1,1 @@
-{"body": "[{\"games\":2180,\"winPercent\":52.66,\"summoner1\":\"Flash\",\"summoner2\":\"Teleport\",\"role\":\"Top\"},{\"games\":658,\"winPercent\":51.51,\"summoner1\":\"Flash\",\"summoner2\":\"Smite\",\"role\":\"Jungle\"}]", "status": "HTTP/1.1 200 OK"}
+{"status": "HTTP/1.1 200 OK", "body": "[{\"games\":673,\"winPercent\":48.88,\"summoner1\":\"Flash\",\"summoner2\":\"Smite\",\"role\":\"Jungle\"},{\"games\":2705,\"winPercent\":50.75,\"summoner1\":\"Flash\",\"summoner2\":\"Teleport\",\"role\":\"Top\"}]"}

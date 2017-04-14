@@ -61,8 +61,8 @@ public class APIResponseAdapterFactory extends CallAdapter.Factory {
 				@Override public void onResponse(Call<R> call, Response<R> response) {
 					apiResponse.setResponseCode(response.code());
 					if (response.isSuccessful()) {
-						apiResponse.setState(APIResponse.State.SUCCESS);
 						apiResponse.setContent(response.body());
+						apiResponse.setState(APIResponse.State.SUCCESS);
 					} else {
 						ErrorResponse errorResponse;
 						try {
@@ -71,8 +71,8 @@ public class APIResponseAdapterFactory extends CallAdapter.Factory {
 							onFailure(call, t);
 							return;
 						}
-						apiResponse.setState(APIResponse.State.API_ERROR);
 						apiResponse.setErrorResponse(errorResponse);
+						apiResponse.setState(APIResponse.State.API_ERROR);
 					}
 				}
 

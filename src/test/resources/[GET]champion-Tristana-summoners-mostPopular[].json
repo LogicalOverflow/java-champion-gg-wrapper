@@ -1,1 +1,1 @@
-{"body": "[{\"games\":5953,\"winPercent\":50.89,\"summoner1\":\"Flash\",\"summoner2\":\"Heal\",\"role\":\"ADC\"}]", "status": "HTTP/1.1 200 OK"}
+{"status": "HTTP/1.1 200 OK", "body": "[{\"games\":7117,\"winPercent\":50.06,\"summoner1\":\"Flash\",\"summoner2\":\"Heal\",\"role\":\"ADC\"}]"}

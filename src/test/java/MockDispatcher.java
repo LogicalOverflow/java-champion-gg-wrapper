@@ -1,7 +1,9 @@
+import com.google.common.util.concurrent.Uninterruptibles;
 import com.lvack.championggwrapper.data.staticdata.Role;
 import com.lvack.championggwrapper.data.staticdata.RoleStatOrder;
 import com.lvack.championggwrapper.data.staticdata.StatOrder;
 import lombok.Getter;
+import lombok.Setter;
 import okhttp3.HttpUrl;
 import okhttp3.mockwebserver.Dispatcher;
 import okhttp3.mockwebserver.MockResponse;
@@ -10,13 +12,18 @@ import org.junit.Assert;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 
 public class MockDispatcher extends Dispatcher {
-	private static final String API_KEY = "mock-api-key";
+	static final String API_KEY = "mock-api-key";
 	@Getter private MockResponse lastResponse;
+	@Setter private long delay = 0;
+	@Getter private List<Long> callTimes = new ArrayList<>();
 
 	@Override public MockResponse dispatch(RecordedRequest request) throws InterruptedException {
 		lastResponse = getResponse(request);
@@ -27,6 +34,8 @@ public class MockDispatcher extends Dispatcher {
 	private MockResponse getResponse(RecordedRequest request) {
 		String path = request.getPath();
 		if (!request.getPath().startsWith("/")) path = "/" + path;
+
+		callTimes.add(System.currentTimeMillis());
 
 		HttpUrl url = HttpUrl.parse("http://localhost" + path);
 
@@ -55,6 +64,8 @@ public class MockDispatcher extends Dispatcher {
 		if (jsonStream == null) {
 			return null;
 		}
+
+		Uninterruptibles.sleepUninterruptibly(delay, TimeUnit.MILLISECONDS);
 
 		return ChampionGGTest.GSON.fromJson(new InputStreamReader(jsonStream), MockResponse.class);
 	}
