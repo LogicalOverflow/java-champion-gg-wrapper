@@ -4,8 +4,8 @@
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.lvack.champion-gg-wrapper</groupId>
-	<artifactId>champion-gg-wrapper</artifactId>
+	<groupId>com.lvack</groupId>
+	<artifactId>com.lvack.champion-gg-wrapper</artifactId>
 	<packaging>jar</packaging>
 	<version>1.0</version>
 
@@ -92,7 +92,7 @@
 					<descriptorRefs>
 						<descriptorRef>jar-with-dependencies</descriptorRef>
 					</descriptorRefs>
-					<finalName>${project.artifactId}</finalName>
+					<finalName>champion-gg-wrapper</finalName>
 					<appendAssemblyId>true</appendAssemblyId>
 					<outputDirectory>${project.build.directory}/assembly/</outputDirectory>
 				</configuration>
