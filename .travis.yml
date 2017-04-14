@@ -27,8 +27,8 @@ deploy:
     tags: true
   overwrite: true
 branches:
-  only:
-  - master
+  except:
+  - mvn-repo
 
 notifications:
   pushover:
