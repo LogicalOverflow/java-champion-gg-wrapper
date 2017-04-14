@@ -67,6 +67,27 @@
 				</configuration>
 			</plugin>
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>2.1</version>
+				<configuration>
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+					<finalName>${project.artifactId}</finalName>
+					<appendAssemblyId>true</appendAssemblyId>
+					<outputDirectory>${project.build.directory}/assembly/</outputDirectory>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
 				<groupId>com.github.github</groupId>
 				<artifactId>site-maven-plugin</artifactId>
 				<version>0.12</version>
@@ -75,7 +96,9 @@
 					<noJekyll>true</noJekyll>
 					<outputDirectory>${project.build.directory}/mvn-repo</outputDirectory>
 					<branch>refs/heads/mvn-repo</branch>
-					<includes><include>**/*</include></includes>
+					<includes>
+						<include>**/*</include>
+					</includes>
 					<repositoryName>java-champion-gg-wrapper</repositoryName>
 					<repositoryOwner>LogicalOverflow</repositoryOwner>
 				</configuration>
