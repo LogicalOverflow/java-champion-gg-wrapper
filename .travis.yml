@@ -1,0 +1,28 @@
+sudo: false
+language: java
+jdk:
+  - oraclejdk8
+
+services:
+  - docker
+cache:
+  directories:
+  - "$HOME/.cache"
+
+addons:
+  apt:
+    packages:
+      - oracle-java8-installer
+
+install: true
+
+deploy:
+  provider: script
+  script: "cp .travis.settings.xml $HOME/.m2/settings.xml && mvn deploy"
+  skip_cleanup: true
+  on:
+    branch: master
+
+branches:
+  only:
+  - master
