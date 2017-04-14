@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/LogicalOverflow/java-champion-gg-wrapper.svg?branch=prod)](https://travis-ci.org/LogicalOverflow/java-champion-gg-wrapper)
+
 # java-champion-gg-wrapper
 A simple Java wrapper for the ChampionGG API (http://api.champion.gg/docs/)
 
