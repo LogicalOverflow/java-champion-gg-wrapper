@@ -7,28 +7,35 @@ services:
 cache:
   directories:
   - "$HOME/.cache"
-
 addons:
   apt:
     packages:
     - oracle-java8-installer
 install: true
-
 deploy:
-  - provider: script
-    script: "cp .travis.settings.xml $HOME/.m2/settings.xml && mvn package deploy"
-    skip_cleanup: true
-    on:
-      overwrite: true
-
-  - provider: releases
-    api-key:
-      secure: j2vcT58Zp1A65r6S3TN3LcpTCvDLNBldG8IhtLEy5EvURAFIKegCPhnK1eDoVtRGbiPv/9J1oH1EkM1K7r4R1WPW/zMErI4ihmfHJ4dlaBbnBX3pjy5eGvTUon62Egyc04yNWjkjLwKX4Sjy1FC1/QiYFECqan8mIk9o4/HGNafU81kUdsBWys/831hHJK3wN/Ir/glO3+UgNJebZIgh83OtnSF4UOuG6+vgxLxc7SDbqHaljqle8fWEnUR4t/YYxClRuPVDrd+LXVHR4t5St5DfVr2Y0122BmnCy4kJ+Woa8AaZCxMXfAlWxwrcpSV1ejZ0kyXRgua1m1An2dpo4yNXrhKDwT8mfOSVtxkBb5HxyTu/Oit3oh1gmJ2tO+La/ZS7jzwfkxZK2gOkSeR3Zp6OoxdzFNIPo8EvNIYX2BLNijAz9pxdiVdxtjiAONpzT7cO5D/m3+KMmciwcA1tLAkiqibtlnuKKV63mc9U0noT3YEqjf3ORbt5+eROxuHGVQCtNuyZ+D4xhW+N6R6ea1de8ECj5fbspchtaYMvAk3aXNj/QOP4SRbPWVfsZt0aDrIDL6VtmyHt+RKCtYOFco4DCNWK/syhm25ULyO8cPpLF1CtErz3UTbvztHi+44+jxDSubP9vXQZhu6A7ROvX1ZEs+3448ET1O+hmz7s+9I=
-    file: "$TRAVIS_BUILD_DIR/target/assembly/champion-gg-wrapper-jar-with-dependencies.jar"
-    skip_cleanup: true
-    on:
-      overwrite: true
-
+- provider: script
+  script: cp .travis.settings.xml $HOME/.m2/settings.xml && mvn package deploy
+  skip_cleanup: true
+  on:
+    tags: true
+- provider: releases
+  api-key:
+    secure: j2vcT58Zp1A65r6S3TN3LcpTCvDLNBldG8IhtLEy5EvURAFIKegCPhnK1eDoVtRGbiPv/9J1oH1EkM1K7r4R1WPW/zMErI4ihmfHJ4dlaBbnBX3pjy5eGvTUon62Egyc04yNWjkjLwKX4Sjy1FC1/QiYFECqan8mIk9o4/HGNafU81kUdsBWys/831hHJK3wN/Ir/glO3+UgNJebZIgh83OtnSF4UOuG6+vgxLxc7SDbqHaljqle8fWEnUR4t/YYxClRuPVDrd+LXVHR4t5St5DfVr2Y0122BmnCy4kJ+Woa8AaZCxMXfAlWxwrcpSV1ejZ0kyXRgua1m1An2dpo4yNXrhKDwT8mfOSVtxkBb5HxyTu/Oit3oh1gmJ2tO+La/ZS7jzwfkxZK2gOkSeR3Zp6OoxdzFNIPo8EvNIYX2BLNijAz9pxdiVdxtjiAONpzT7cO5D/m3+KMmciwcA1tLAkiqibtlnuKKV63mc9U0noT3YEqjf3ORbt5+eROxuHGVQCtNuyZ+D4xhW+N6R6ea1de8ECj5fbspchtaYMvAk3aXNj/QOP4SRbPWVfsZt0aDrIDL6VtmyHt+RKCtYOFco4DCNWK/syhm25ULyO8cPpLF1CtErz3UTbvztHi+44+jxDSubP9vXQZhu6A7ROvX1ZEs+3448ET1O+hmz7s+9I=
+  file: "$TRAVIS_BUILD_DIR/target/assembly/champion-gg-wrapper-jar-with-dependencies.jar"
+  skip_cleanup: true
+  on:
+    tags: true
+  overwrite: true
 branches:
   only:
   - master
+
+notifications:
+  pushover:
+    api_token:
+      secure: r+NiqXctKwNs2b72H9C7kbVPjWpm2j67fVUOeqhtMME6Li2rPwIjU+qMSnRW8XROJBwKVywKta5RCkOIAILXn+rDJePK3H3H0kOLqqT/BqeRMXS3ITSAVQSGpw/OS1CYjz2y8oS7qkFpZRjkhfT46LeOO3UmkgPYKXJiz6NOfxwWuySHGROFG3aVzeKPF5Gq2lmBmcJsjrWTrEiMCSaI9WEKwcLt+hDZmKgNJIeeBYwN0Xr5dtWE2BPwbXCzudRaHPH/kb3A3ImipJCdU/uScKRvuNVMj2+TUJw60nklxsS/SF6jWJgGxTg5/nR0p+NAQvNNJyo+OIWSaUKQwOZBYD7fro9etA2A1kskdEFWMRYE9wZzrkebwKQL0geYIXMZ0K7furzqn+wHbzLL89JsOGwnW3Ez1d9hP9YdJDBgr1TQFBop/0Bp5SUutXDyv1efgRbh0HbEugZa963Pm8Dk7G66oVwava7Qkcbq7qjnRfwQrzrfx+c6LN65YSoMpzP//zZuQiilMd3RVouMHv8Ox9rNsOs5KB3qukZTX69EnzXp0i+hZPEa4tEq104HYgI4gJXZRj72O7rTI6tEfaABURe0D+OKFLX7gkrorSSHtYCQr67SaGq1G4kzMbrPc9V0i4czItLK342X5rldukNkpzpwAVFIWvHntalzM9cUbQc=
+    users:
+      secure: QzKqmya7T8QmSDhSuASa4cOvatH7ShHO6xrmpv7fPqnq0ezjQI03W+HlKlx9+zc3C4e4k8WpeO5HJlx3zbW1+46KjGJ0OFl01Lthjr3qH/Hcltx8HQHuWWccvSZEWiDPaX2Cvl7bK/JXGwYuIjrn35WWDuCeFiJeHGFxecjossE6RdAwnVdWa3syp25hYRfsaxzNiUufLQWzU5NJavflDMF61jV7dVc+PB1ziWbYINFABxZSpvhc6mZQbIGKAInDJV5IRZLnvITJLpybmACKJ35a5yIPbSABZuIcqneWwoLHXSlsJxsjvDHxL0/K6EDewxe5aVCUrMGLk48gOkmZm7fKGfl6N0TcxhjMJx+LfmMxVws9eHtDlCedbMVxhV+VU1ZFF/Q+UpZp95AxJx6ZXz/Wblpyd5M4ijrvArxfScYJD2PiLbFoToBS2QGpg8m0VtPpZzdaxRw9PS07cruBwUO8BCb6Gz2J7G9lwk0WVndAUZS6/KwNCGHlMIpfjf9ug1BAeojDERMymEi3Bch/XFeBo23HCIZTXzVaRLS5wbpvUS30dgsrZQ812iof/hIp1oiN+2xc1P80+p4S5yPW96I6px/4NRUbSbO6XUY8BcOWnSOhXT6YhLnzv4+ElVSLEScIZAswzyrUnr91lxmbIYzfFL1Yng18dttxzvqMHaI=
+    template: "%{repository_name} (commit by %{author}): %{message} - %{result)"
+    on_success: always
+    on_failure: always
