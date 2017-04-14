@@ -22,3 +22,7 @@ deploy:
   skip_cleanup: true
   on:
     branch: prod
+
+branches:
+  only:
+  - prod
