@@ -34,12 +34,7 @@ And the the depenency:
 </dependencies>
 ```
 
-If you do not use maven, the jars can be found in the `mvn-repo` branch. If you use these directly be aware that they do not contain libraries this project depends on. You might need to also add them:
-* retrofit2 (version 2.2.0; with converter-gson and adapter-guava)
-* gson (version 2.8.0)
-* guava (version 21.0)
-* commons-io (version 2.5)
-* commons-lang3 (version 3.5)
+If you do not use maven, the jars can be found in the [releases](https://github.com/LogicalOverflow/java-champion-gg-wrapper/releases). In case you want a jar without the included dependencies look in the `mvn-repo` branch.
 
 Then the usage is pretty straight forward:
 ```java
