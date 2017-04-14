@@ -9,7 +9,7 @@ import com.lvack.championggwrapper.data.base.ranking.RankingData;
 import com.lvack.championggwrapper.data.base.rune.RuneSetData;
 import com.lvack.championggwrapper.data.base.skill.SkillsData;
 import com.lvack.championggwrapper.data.base.summoner.SummonerPairsData;
-import com.lvack.championggwrapper.data.staticdata.DetailedChampionStat;
+import com.lvack.championggwrapper.data.staticdata.ChampionStat;
 import com.lvack.championggwrapper.data.staticdata.Role;
 import lombok.Data;
 
@@ -50,7 +50,7 @@ public class DetailedChampionRoleData {
 	@SerializedName("matchups")
 	private List<MatchupData> matchups;
 	@SerializedName("general")
-	private HashMap<DetailedChampionStat, RankingData> rankingData;
+	private HashMap<ChampionStat, RankingData> rankingData;
 	@SerializedName("skills")
 	private SkillsData skills;
 	@SerializedName("masteries")

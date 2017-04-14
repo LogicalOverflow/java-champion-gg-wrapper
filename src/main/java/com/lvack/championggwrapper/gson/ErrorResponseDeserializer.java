@@ -1,5 +1,6 @@
 package com.lvack.championggwrapper.gson;
 
+import com.google.common.annotations.VisibleForTesting;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
@@ -25,7 +26,8 @@ public class ErrorResponseDeserializer implements JsonDeserializer<ErrorResponse
 		}
 	}
 
-	private class BothAttemptsFailedException extends JsonParseException {
+	@VisibleForTesting
+	public class BothAttemptsFailedException extends JsonParseException {
 
 		private BothAttemptsFailedException(JsonParseException normal, JsonParseException advanced) {
 			super("failed to deserialize error response as both " +

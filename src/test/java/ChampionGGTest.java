@@ -340,6 +340,16 @@ import java.util.stream.Collectors;
 		}
 	}
 
+	@Test
+	void testObjectMethodOnApi() {
+		Class<? extends ChampionGGAPI> apiClass =
+			new ChampionGGAPIFactory(MockDispatcher.API_KEY, 10)
+				.buildChampionGGAPI().getClass();
+
+		Assert.assertTrue("getClass of api returned invalid value",
+			ChampionGGTest.class.isAssignableFrom(apiClass));
+	}
+
 	private String getJsonType(JsonElement element) {
 		if (element == null) return "null";
 		if (element.isJsonArray()) return "json array";

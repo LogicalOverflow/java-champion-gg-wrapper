@@ -2,7 +2,6 @@ package com.lvack.championggwrapper.data.staticdata;
 
 import com.google.gson.annotations.SerializedName;
 
-
 public enum ChampionStat {
 	@SerializedName("winPercent")WIN_PERCENT,
 	@SerializedName("playPercent")PLAY_PERCENT,
