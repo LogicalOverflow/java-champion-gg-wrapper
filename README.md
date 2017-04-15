@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/LogicalOverflow/java-champion-gg-wrapper.svg?branch=master)](https://travis-ci.org/LogicalOverflow/java-champion-gg-wrapper) [![Coverage Status](https://coveralls.io/repos/github/LogicalOverflow/java-champion-gg-wrapper/badge.svg?branch=master)](https://coveralls.io/github/LogicalOverflow/java-champion-gg-wrapper?branch=master) [![Release Version GitHub](https://img.shields.io/github/release/LogicalOverflow/java-champion-gg-wrapper.svg)](https://github.com/LogicalOverflow/java-champion-gg-wrapper/releases/latest) [![Release Version Maven](https://img.shields.io/maven-central/v/com.lvack/java-champion-gg-wrapper.svg)](https://github.com/LogicalOverflow/java-champion-gg-wrapper)
+[![Build Status](https://travis-ci.org/LogicalOverflow/java-champion-gg-wrapper.svg?branch=master)](https://travis-ci.org/LogicalOverflow/java-champion-gg-wrapper) [![Coverage Status](https://coveralls.io/repos/github/LogicalOverflow/java-champion-gg-wrapper/badge.svg?branch=master)](https://coveralls.io/github/LogicalOverflow/java-champion-gg-wrapper?branch=master) [![GitHub Release Version](https://img.shields.io/github/release/LogicalOverflow/java-champion-gg-wrapper.svg)](https://github.com/LogicalOverflow/java-champion-gg-wrapper/releases/latest) [![Maven Version](https://img.shields.io/maven-central/v/com.lvack/java-champion-gg-wrapper.svg)](https://maven-badges.herokuapp.com/maven-central/com.lvack/champion-gg-wrapper)
 
 # java-champion-gg-wrapper
 A simple Java wrapper for the ChampionGG API (http://api.champion.gg/docs/)
@@ -21,7 +21,7 @@ All you have to do is add the dependency to your maven project:
 </dependencies>
 ```
 
-If you do not use maven, the jars can be found in the [releases](https://github.com/LogicalOverflow/java-champion-gg-wrapper/releases). In case you want a jar without the included dependencies, you can download it from maven central.
+If you do not use maven, the jars can be found in the [releases](https://github.com/LogicalOverflow/java-champion-gg-wrapper/releases/latest). In case you want a jar without the included dependencies, you can download them from maven central ([latest version](https://search.maven.org/remote_content?g=com.lvack&a=champion-gg-wrapper&v=LATEST)).
 
 Then the usage is pretty straight forward:
 ```java
