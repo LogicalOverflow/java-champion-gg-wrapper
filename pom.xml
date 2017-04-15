@@ -178,10 +178,10 @@
 							<goal>sign</goal>
 						</goals>
 						<configuration>
-							<executable>${gpg.executable}</executable>
-							<keyname>${gpg.keyname}</keyname>
-							<passphrase>${gpg.passphrase}</passphrase>
-							<lockMode>${gpg.lockMode}</lockMode>
+							<executable>gpg</executable>
+							<keyname>AAFE9B9D</keyname>
+							<passphrase>${env.PGP_PASSPHRASE}</passphrase>
+							<lockMode>never</lockMode>
 						</configuration>
 					</execution>
 				</executions>

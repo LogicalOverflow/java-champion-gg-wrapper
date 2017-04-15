@@ -9,19 +9,4 @@
 			<password>${env.OSSRH_PASSWORD}</password>
 		</server>
 	</servers>
-
-	<profiles>
-		<profile>
-			<id>ossrh</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<properties>
-				<gpg.executable>gpg</gpg.executable>
-				<gpg.keyname>AAFE9B9D</gpg.keyname>
-				<gpg.passphrase>${env.PGP_PASSPHRASE}</gpg.passphrase>
-				<gpg.lockMode>never</gpg.lockMode>
-			</properties>
-		</profile>
-	</profiles>
 </settings>
