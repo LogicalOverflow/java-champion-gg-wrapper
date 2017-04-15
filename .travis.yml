@@ -50,5 +50,5 @@ notifications:
 before_install:
 - openssl enc -aes-256-cbc -d -in secrets.tar.enc -out secrets.tar -k $ENCRYPTION_PASSWORD
 - tar xf secrets.tar
-- mv local.pubring.gpg ~.gnupg/local.pubring.gpg
-- mv local.secring.gpg ~.gnupg/local.secring.gpg
+- mv local.pubring.gpg ~/.gnupg/local.pubring.gpg
+- mv local.secring.gpg ~/.gnupg/local.secring.gpg
