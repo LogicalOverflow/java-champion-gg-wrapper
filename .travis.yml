@@ -43,5 +43,5 @@ notifications:
     on_failure: always
 
 before_install:
-- openssl aes-256-cbc -K $encrypted_ea3213f49d1f_key -iv $encrypted_ea3213f49d1f_iv -in secrets.tar.enc -out secrets.tar -d
+- openssl enc aes-256-cbc -d -in secrets.tar.enc -out secrets.tar -k $ENCRYPTION_PASSWORD
 - tar xf secrets.tar
