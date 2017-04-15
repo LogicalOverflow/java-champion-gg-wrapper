@@ -43,5 +43,5 @@ notifications:
     on_failure: always
 
 before_install:
-- openssl enc aes-256-cbc -d -in secrets.tar.enc -out secrets.tar -k $ENCRYPTION_PASSWORD
+- openssl enc -aes-256-cbc -d -in secrets.tar.enc -out secrets.tar -k $ENCRYPTION_PASSWORD
 - tar xf secrets.tar
