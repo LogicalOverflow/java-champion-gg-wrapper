@@ -25,6 +25,7 @@ All you have to do is add the dependency to your maven project:
     </dependency>
 </dependencies>
 ```
+The maven central search does not work (yet), but the artifacts are [available](http://search.maven.org/#artifactdetails|com.lvack|champion-gg-wrapper|1.0-beta-02|jar) anyways.
 
 If you do not use maven, the jars can be found in the [releases](https://github.com/LogicalOverflow/java-champion-gg-wrapper/releases/latest). In case you want a jar without the included dependencies, you can download them from maven central ([latest version](https://search.maven.org/remote_content?g=com.lvack&a=champion-gg-wrapper&v=LATEST)).
 
