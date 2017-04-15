@@ -1,4 +1,9 @@
-[![Build Status](https://travis-ci.org/LogicalOverflow/java-champion-gg-wrapper.svg?branch=master)](https://travis-ci.org/LogicalOverflow/java-champion-gg-wrapper)  [![Coverage Status](https://coveralls.io/repos/github/LogicalOverflow/java-champion-gg-wrapper/badge.svg?branch=master)](https://coveralls.io/github/LogicalOverflow/java-champion-gg-wrapper?branch=master)
+[![Build Status](https://img.shields.io/travis/LogicalOverflow/java-champion-gg-wrapper/master.svg?style=flat-square)](https://travis-ci.org/LogicalOverflow/java-champion-gg-wrapper)
+[![Coverage Status](https://img.shields.io/coveralls/LogicalOverflow/java-champion-gg-wrapper/master.svg?style=flat-square)](https://coveralls.io/github/LogicalOverflow/java-champion-gg-wrapper?branch=master)
+[![Codacy Grade](https://img.shields.io/codacy/grade/d33215d6a3ca41d597ec28c3f06fbf88/master.svg?style=flat-square)](https://www.codacy.com/app/LogicalOverflow/java-champion-gg-wrapper/dashboard)
+[![GitHub Release Version](https://img.shields.io/github/release/LogicalOverflow/java-champion-gg-wrapper.svg?style=flat-square)](https://github.com/LogicalOverflow/java-champion-gg-wrapper/releases/latest)
+[![Maven Version](https://img.shields.io/maven-central/v/com.lvack/java-champion-gg-wrapper.svg?style=flat-square)](https://maven-badges.herokuapp.com/maven-central/com.lvack/champion-gg-wrapper)
+[![License](https://img.shields.io/github/license/LogicalOverflow/java-champion-gg-wrapper.svg?style=flat-square)](https://github.com/LogicalOverflow/java-champion-gg-wrapper/blob/master/LICENSE)
 
 # java-champion-gg-wrapper
 A simple Java wrapper for the ChampionGG API (http://api.champion.gg/docs/)
@@ -10,31 +15,18 @@ A simple Java wrapper for the ChampionGG API (http://api.champion.gg/docs/)
 * Complete: Maybe also not strictly a feature but all API methods provided by the ChampionGG API are currently implemented.
 
 ## Usage
-First you need add it as a depencency to your pom. To do that add the repository:
-```xml
-<repositories>
-    <repository>
-        <id>java-champion-gg-wrapper-mvn-repo</id>
-        <url>https://raw.github.com/LogicalOverflow/java-champion-gg-wrapper/mvn-repo/</url>
-        <snapshots>
-            <enabled>true</enabled>
-            <updatePolicy>always</updatePolicy>
-        </snapshots>
-    </repository>
-</repositories>
-```
-And the the depenency:
+All you have to do is add the dependency to your maven project:
 ```xml
 <dependencies>
     <dependency>
         <groupId>com.lvack</groupId>
         <artifactId>champion-gg-wrapper</artifactId>
-        <version>1.0</version>
+        <version>{version}</version>
     </dependency>
 </dependencies>
 ```
 
-If you do not use maven, the jars can be found in the [releases](https://github.com/LogicalOverflow/java-champion-gg-wrapper/releases). In case you want a jar without the included dependencies look in the `mvn-repo` branch.
+If you do not use maven, the jars can be found in the [releases](https://github.com/LogicalOverflow/java-champion-gg-wrapper/releases/latest). In case you want a jar without the included dependencies, you can download them from maven central ([latest version](https://search.maven.org/remote_content?g=com.lvack&a=champion-gg-wrapper&v=LATEST)).
 
 Then the usage is pretty straight forward:
 ```java
