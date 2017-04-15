@@ -1,4 +1,8 @@
-[![Build Status](https://img.shields.io/travis/LogicalOverflow/java-champion-gg-wrapper/master.svg?style=flat-square)](https://travis-ci.org/LogicalOverflow/java-champion-gg-wrapper) [![Coverage Status](https://img.shields.io/coveralls/LogicalOverflow/java-champion-gg-wrapper/master.svg?style=flat-square)](https://coveralls.io/github/LogicalOverflow/java-champion-gg-wrapper?branch=master) [![GitHub Release Version](https://img.shields.io/github/release/LogicalOverflow/java-champion-gg-wrapper.svg?style=flat-square)](https://github.com/LogicalOverflow/java-champion-gg-wrapper/releases/latest) [![Maven Version](https://img.shields.io/maven-central/v/com.lvack/java-champion-gg-wrapper.svg?style=flat-square)](https://maven-badges.herokuapp.com/maven-central/com.lvack/champion-gg-wrapper)
+[![Build Status](https://img.shields.io/travis/LogicalOverflow/java-champion-gg-wrapper/master.svg?style=flat-square)](https://travis-ci.org/LogicalOverflow/java-champion-gg-wrapper)
+[![Coverage Status](https://img.shields.io/coveralls/LogicalOverflow/java-champion-gg-wrapper/master.svg?style=flat-square)](https://coveralls.io/github/LogicalOverflow/java-champion-gg-wrapper?branch=master)
+[![GitHub Release Version](https://img.shields.io/github/release/LogicalOverflow/java-champion-gg-wrapper.svg?style=flat-square)](https://github.com/LogicalOverflow/java-champion-gg-wrapper/releases/latest)
+[![Maven Version](https://img.shields.io/maven-central/v/com.lvack/java-champion-gg-wrapper.svg?style=flat-square)](https://maven-badges.herokuapp.com/maven-central/com.lvack/champion-gg-wrapper)
+[![License](https://img.shields.io/github/license/LogicalOverflow/java-champion-gg-wrapper.svg?style=flat-square)](https://github.com/LogicalOverflow/java-champion-gg-wrapper/blob/master/LICENSE)
 
 # java-champion-gg-wrapper
 A simple Java wrapper for the ChampionGG API (http://api.champion.gg/docs/)
