@@ -60,6 +60,19 @@
 		</snapshotRepository>
 	</distributionManagement>
 
+	<profiles>
+		<profile>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<id>codacy</id>
+			<properties>
+				<projectToken>d33215d6a3ca41d597ec28c3f06fbf88</projectToken>
+				<apiToken>${env.CODACY_API_TOKEN}</apiToken>
+			</properties>
+		</profile>
+	</profiles>
+
 	<build>
 		<plugins>
 			<plugin>

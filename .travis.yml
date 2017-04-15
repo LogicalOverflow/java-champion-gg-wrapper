@@ -37,6 +37,7 @@ branches:
 
 after_success:
 - mvn clean test jacoco:report coveralls:report
+- mvn com.gavinmogan:codacy-maven-plugin:coverage -DcoverageReportFile=target/site/jacoco/jacoco.xml -P codacy
 
 notifications:
   pushover:
