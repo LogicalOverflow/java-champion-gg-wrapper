@@ -177,6 +177,15 @@
 						<goals>
 							<goal>sign</goal>
 						</goals>
+						<configuration>
+							<executable>${gpg.executable}</executable>
+							<keyname>${gpg.keyname}</keyname>
+							<passphrase>${gpg.passphrase}</passphrase>
+							<defaultKeyring>${gpg.defaultKeyring}</defaultKeyring>
+							<lockMode>${gpg.lockMode}</lockMode>
+							<publicKeyring>${gpg.publicKeyring}</publicKeyring>
+							<secretKeyring>${gpg.secretKeyring}</secretKeyring>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>

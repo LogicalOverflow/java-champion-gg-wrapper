@@ -7,13 +7,11 @@ services:
 cache:
   directories:
   - "$HOME/.cache"
-
 addons:
   apt:
     packages:
     - oracle-java8-installer
 install: true
-
 deploy:
 - provider: script
   script: cp .travis.settings.xml $HOME/.m2/settings.xml && mvn -DskipTests=true package
@@ -29,13 +27,11 @@ deploy:
   on:
     tags: true
   overwrite: true
-
 branches:
   except:
   - mvn-repo
 after_success:
 - mvn clean test jacoco:report coveralls:report
-
 notifications:
   pushover:
     api_token:
@@ -45,3 +41,7 @@ notifications:
     template: "%{repository_name} (commit by %{author}): %{message} - %{result)"
     on_success: always
     on_failure: always
+
+before_install:
+  - openssl aes-256-cbc -K $encrypted_ea3213f49d1f_key -iv $encrypted_ea3213f49d1f_iv -in secret.tar.enc -out secret.tar -d
+  - tar xf secret.tar
