@@ -1,5 +1,6 @@
 [![Build Status](https://img.shields.io/travis/LogicalOverflow/java-champion-gg-wrapper/master.svg?style=flat-square)](https://travis-ci.org/LogicalOverflow/java-champion-gg-wrapper)
 [![Coverage Status](https://img.shields.io/coveralls/LogicalOverflow/java-champion-gg-wrapper/master.svg?style=flat-square)](https://coveralls.io/github/LogicalOverflow/java-champion-gg-wrapper?branch=master)
+[![Codacy Grade](https://img.shields.io/codacy/grade/d33215d6a3ca41d597ec28c3f06fbf88/master.svg?style=flat-square)](https://www.codacy.com/app/LogicalOverflow/java-champion-gg-wrapper/dashboard)
 [![GitHub Release Version](https://img.shields.io/github/release/LogicalOverflow/java-champion-gg-wrapper.svg?style=flat-square)](https://github.com/LogicalOverflow/java-champion-gg-wrapper/releases/latest)
 [![Maven Version](https://img.shields.io/maven-central/v/com.lvack/java-champion-gg-wrapper.svg?style=flat-square)](https://maven-badges.herokuapp.com/maven-central/com.lvack/champion-gg-wrapper)
 [![License](https://img.shields.io/github/license/LogicalOverflow/java-champion-gg-wrapper.svg?style=flat-square)](https://github.com/LogicalOverflow/java-champion-gg-wrapper/blob/master/LICENSE)
