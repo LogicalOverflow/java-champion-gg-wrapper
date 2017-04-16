@@ -13,6 +13,7 @@ import com.lvack.championggwrapper.data.staticdata.RoleStatOrder;
 import com.lvack.championggwrapper.data.staticdata.StatOrder;
 import com.lvack.championggwrapper.retrofit.APIResponse;
 import com.lvack.championggwrapper.retrofit.ChampionGGAPI;
+import com.lvack.championggwrapper.retrofit.proxies.RateLimitingRetrofitProxy;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import org.apache.commons.lang3.ClassUtils;
@@ -26,9 +27,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
-import java.lang.reflect.Parameter;
-import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.*;
 import java.time.Duration;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -40,8 +39,7 @@ import java.util.stream.Collectors;
 	private static MockWebServer webServer;
 	private static MockDispatcher dispatcher;
 
-	@BeforeAll
-	static void initChampionGGAPI() {
+	@BeforeAll static void initChampionGGAPI() {
 		webServer = new MockWebServer();
 		dispatcher = new MockDispatcher();
 		webServer.setDispatcher(dispatcher);
@@ -51,8 +49,7 @@ import java.util.stream.Collectors;
 		API = championGGAPIFactory.buildChampionGGAPI();
 	}
 
-	@AfterAll
-	static void deleteChampionGGAPI() throws IOException {
+	@AfterAll static void deleteChampionGGAPI() throws IOException {
 		webServer.shutdown();
 	}
 
@@ -90,8 +87,7 @@ import java.util.stream.Collectors;
 		return tests;
 	}
 
-	@Test
-	void testInvalidApiKey() {
+	@Test void testInvalidApiKey() {
 		dispatcher.setDelay(0);
 		ChampionGGAPI championGGAPI = new ChampionGGAPIFactory("invalid-key").buildChampionGGAPI();
 		APIResponse<List<HighLevelChampionData>> response = championGGAPI.getHighLevelChampionData();
@@ -106,14 +102,23 @@ import java.util.stream.Collectors;
 		Assert.assertNotNull("invalid api key response does not have an error exception", response.getError());
 	}
 
-	@Test
-	void testRateLimiter() {
+	@Test void testRateLimiter() {
 		dispatcher.setDelay(0);
 
 		long requestDelay = 1000;
 		double maxRequestsPerSecond = 1000.0 / requestDelay;
 		ChampionGGAPIFactory factory = new ChampionGGAPIFactory(Constants.API_KEY, maxRequestsPerSecond);
 		ChampionGGAPI api = factory.buildChampionGGAPI();
+
+		try {
+			InvocationHandler invocationHandler = Proxy.getInvocationHandler(api);
+			Assert.assertNotNull("invocation handler for api is null", invocationHandler);
+			Assert.assertTrue("invocation handler for api is not a rate limiting proxy",
+				RateLimitingRetrofitProxy.class.isAssignableFrom(invocationHandler.getClass()));
+			Assert.assertNotEquals("two apis from different factories are equal", api, API);
+		} catch (IllegalArgumentException e) {
+			Assert.fail("failed to get invocation from api, stacktrace: " + getStackTrace(e));
+		}
 
 		final int calls = 4;
 
@@ -136,8 +141,7 @@ import java.util.stream.Collectors;
 
 	}
 
-	@Test
-	void testSlowResponse() {
+	@Test void testSlowResponse() {
 		dispatcher.setDelay(1000);
 
 		final int calls = 4;
@@ -354,8 +358,7 @@ import java.util.stream.Collectors;
 			actualPrimitive + ") at " + path + " are not equal; ", expectedPrimitive, actualPrimitive);
 	}
 
-	@Test
-	void testObjectMethodOnApi() {
+	@Test void testObjectMethodOnApi() {
 		//noinspection ResultOfMethodCallIgnored
 		new ChampionGGAPIFactory(Constants.API_KEY, 10)
 			.buildChampionGGAPI().getClass();

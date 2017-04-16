@@ -29,10 +29,6 @@ public class RateLimitingRetrofitProxy<T> implements InvocationHandler {
 	}
 
 	public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-		if (method.getDeclaringClass() == Object.class) {
-			return method.invoke(this, args);
-		}
-
 		if (APIResponse.class.isAssignableFrom(method.getReturnType())) {
 			return new FutureAPIResponse(method, args, getPermits(method));
 		}

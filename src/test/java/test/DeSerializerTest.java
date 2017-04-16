@@ -20,8 +20,7 @@ import org.junit.jupiter.api.Test;
 
 class DeSerializerTest {
 
-	@Test
-	void testErrorResponseDeserializer() {
+	@Test void testErrorResponseDeserializer() {
 		Gson gson = new GsonBuilder().registerTypeAdapter(ErrorResponse.class, new ErrorResponseDeserializer()).create();
 
 		NormalErrorResponse normalErrorResponse = new NormalErrorResponse();
@@ -63,8 +62,7 @@ class DeSerializerTest {
 
 	}
 
-	@Test
-	void testEnumDeSerializer() {
+	@Test void testEnumDeSerializer() {
 		Gson gson = new GsonBuilder()
 			.registerTypeAdapter(TestEnum.class, new EnumDeSerializer<>(TestEnum.class)).create();
 
@@ -91,8 +89,7 @@ class DeSerializerTest {
 			() -> gson.fromJson(new JsonArray(), TestEnum.class));
 	}
 
-	@Test
-	void testGsonProvider() {
+	@Test void testGsonProvider() {
 		Assert.assertNotNull("gson provider did not provide a gson builder", GsonProvider.getGsonBuilder());
 		Assert.assertNotNull("gson provider did not provide a gson instance", GsonProvider.getGson());
 		Assert.assertEquals("gson provider did not provide the same gson instance twice",
