@@ -1,3 +1,5 @@
+package test;
+
 import com.google.gson.*;
 import com.google.gson.annotations.SerializedName;
 import com.lvack.championggwrapper.data.error.AdvancedErrorResponse;

@@ -1,3 +1,5 @@
+package util;
+
 import com.google.gson.*;
 import okhttp3.mockwebserver.MockResponse;
 
@@ -22,7 +24,7 @@ public class MockResponseDeSerializer implements JsonDeserializer<MockResponse>,
 
 		try {
 			jsonObject.add("body",
-					new JsonPrimitive(new String(src.getBody().clone().readByteArray(), "UTF-8")));
+				new JsonPrimitive(new String(src.getBody().clone().readByteArray(), "UTF-8")));
 		} catch (UnsupportedEncodingException e) {
 			throw new JsonParseException("failed to encode body with UTF-8", e);
 		}

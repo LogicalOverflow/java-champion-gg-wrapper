@@ -2,17 +2,17 @@ package com.lvack.championggwrapper.retrofit.proxies;
 
 import com.google.common.util.concurrent.RateLimiter;
 import com.lvack.championggwrapper.annotations.Permits;
-import com.lvack.championggwrapper.data.error.ErrorResponse;
 import com.lvack.championggwrapper.retrofit.APIResponse;
 import com.lvack.championggwrapper.retrofit.Waitable;
 import lombok.experimental.Delegate;
 
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
 
-public class RateLimitingRetrofitProxy<T> {
+public class RateLimitingRetrofitProxy<T> implements InvocationHandler {
 	private final T wrappedInstance;
 	private final T instance;
 	private final RateLimiter rateLimiter;
@@ -21,15 +21,14 @@ public class RateLimitingRetrofitProxy<T> {
 		this.wrappedInstance = instanceToWrap;
 		this.rateLimiter = rateLimiter;
 		//noinspection unchecked
-		this.instance = (T) Proxy.newProxyInstance(service.getClassLoader(), new Class<?>[]{service},
-			this::invoke);
+		this.instance = (T) Proxy.newProxyInstance(service.getClassLoader(), new Class<?>[]{service}, this);
 	}
 
 	public static <T> T wrap(RateLimiter rateLimiter, Class<T> service, T instanceToWrap) {
 		return new RateLimitingRetrofitProxy<>(rateLimiter, service, instanceToWrap).instance;
 	}
 
-	private Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+	public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
 		if (method.getDeclaringClass() == Object.class) {
 			return method.invoke(this, args);
 		}

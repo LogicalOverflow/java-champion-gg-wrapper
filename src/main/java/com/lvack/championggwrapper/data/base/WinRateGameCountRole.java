@@ -10,5 +10,5 @@ import lombok.ToString;
 @Data @EqualsAndHashCode(callSuper = true) @ToString(callSuper = true)
 public class WinRateGameCountRole extends WinRateGameCount {
 	@SerializedName("role")
-	Role role;
+	private Role role;
 }

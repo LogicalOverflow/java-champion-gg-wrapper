@@ -1,4 +1,9 @@
-import com.google.gson.*;
+package test;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 import com.lvack.championggwrapper.ChampionGGAPIFactory;
 import com.lvack.championggwrapper.annotations.*;
 import com.lvack.championggwrapper.data.champion.HighLevelChampionData;
@@ -6,7 +11,6 @@ import com.lvack.championggwrapper.data.error.ErrorResponse;
 import com.lvack.championggwrapper.data.staticdata.Role;
 import com.lvack.championggwrapper.data.staticdata.RoleStatOrder;
 import com.lvack.championggwrapper.data.staticdata.StatOrder;
-import com.lvack.championggwrapper.gson.GsonProvider;
 import com.lvack.championggwrapper.retrofit.APIResponse;
 import com.lvack.championggwrapper.retrofit.ChampionGGAPI;
 import okhttp3.mockwebserver.MockResponse;
@@ -14,12 +18,13 @@ import okhttp3.mockwebserver.MockWebServer;
 import org.apache.commons.lang3.ClassUtils;
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
+import util.Constants;
+import util.MockDispatcher;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.annotation.Annotation;
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.lang.reflect.ParameterizedType;
@@ -29,9 +34,6 @@ import java.util.stream.Collectors;
 
 
 @DisplayName("ChampionGGAPI tests") class ChampionGGTest {
-	static final Gson GSON = GsonProvider.getGsonBuilder()
-		.registerTypeAdapter(MockResponse.class, new MockResponseDeSerializer())
-		.create();
 
 	private static ChampionGGAPI API;
 	private static MockWebServer webServer;
@@ -44,7 +46,7 @@ import java.util.stream.Collectors;
 		webServer.setDispatcher(dispatcher);
 		ChampionGGAPIFactory.BASE_URL = webServer.url("/").toString();
 
-		ChampionGGAPIFactory championGGAPIFactory = new ChampionGGAPIFactory(MockDispatcher.API_KEY, -1);
+		ChampionGGAPIFactory championGGAPIFactory = new ChampionGGAPIFactory(Constants.API_KEY, -1);
 		API = championGGAPIFactory.buildChampionGGAPI();
 	}
 
@@ -122,12 +124,12 @@ import java.util.stream.Collectors;
 						Assert.assertNull("success response has an error exception", actualError);
 
 						String expectedResponseJson = new String(response.getBody().clone().readByteArray(), "UTF-8");
-						Object expectedContent = GSON.fromJson(expectedResponseJson,
+						Object expectedContent = Constants.GSON.fromJson(expectedResponseJson,
 							((ParameterizedType) method.getGenericReturnType()).getActualTypeArguments()[0]);
 						Assert.assertEquals("response content does not match", expectedContent, actualContent);
 
-						JsonElement expectedJsonElement = GSON.fromJson(expectedResponseJson, JsonElement.class);
-						JsonElement actualJsonElement = GSON.fromJson(GSON.toJson(actualContent), JsonElement.class);
+						JsonElement expectedJsonElement = Constants.GSON.fromJson(expectedResponseJson, JsonElement.class);
+						JsonElement actualJsonElement = Constants.GSON.fromJson(Constants.GSON.toJson(actualContent), JsonElement.class);
 						assertEqualJsonElements(expectedJsonElement, actualJsonElement);
 						// TODO: find fields that may be null; assertNoNullFields(actualContent);
 					}
@@ -148,7 +150,7 @@ import java.util.stream.Collectors;
 						Assert.assertNotNull("api error response does not have an error response", actualErrorResponse);
 						Assert.assertNull("api error response has an error exception", actualError);
 
-						ErrorResponse expectedErrorResponse = GSON.fromJson(new String(response.getBody().clone().readByteArray(), "UTF-8"),
+						ErrorResponse expectedErrorResponse = Constants.GSON.fromJson(new String(response.getBody().clone().readByteArray(), "UTF-8"),
 							ErrorResponse.class);
 						Assert.assertEquals("error response content does not match", expectedErrorResponse, actualErrorResponse);
 					}
@@ -185,7 +187,7 @@ import java.util.stream.Collectors;
 
 		long requestDelay = 1000;
 		double maxRequestsPerSecond = 1000.0 / requestDelay;
-		ChampionGGAPIFactory factory = new ChampionGGAPIFactory(MockDispatcher.API_KEY, maxRequestsPerSecond);
+		ChampionGGAPIFactory factory = new ChampionGGAPIFactory(Constants.API_KEY, maxRequestsPerSecond);
 		ChampionGGAPI api = factory.buildChampionGGAPI();
 
 		final int calls = 4;
@@ -343,7 +345,7 @@ import java.util.stream.Collectors;
 	@Test
 	void testObjectMethodOnApi() {
 		//noinspection ResultOfMethodCallIgnored
-		new ChampionGGAPIFactory(MockDispatcher.API_KEY, 10)
+		new ChampionGGAPIFactory(Constants.API_KEY, 10)
 				.buildChampionGGAPI().getClass();
 	}
 
@@ -363,11 +365,11 @@ import java.util.stream.Collectors;
 		return "unknown";
 	}
 
-	private void assertNoNullFields(Object object) {
+	/* private void assertNoNullFields(Object object) {
 		assertNoNullFields(object, "");
-	}
+	} */
 
-	private void assertNoNullFields(Object object, String path) {
+	/* private void assertNoNullFields(Object object, String path) {
 		Assert.assertNotNull("field at " + path + " is null", object);
 		if (ClassUtils.isPrimitiveOrWrapper(object.getClass())) return;
 		if (object instanceof String) return;
@@ -396,7 +398,7 @@ import java.util.stream.Collectors;
 				}
 			}
 		}
-	}
+	} */
 
 	private String getMethodName(Method method, Object[] args) {
 		return method.getDeclaringClass().getSimpleName() + "." + method.getName() +
