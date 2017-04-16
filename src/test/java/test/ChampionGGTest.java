@@ -24,6 +24,7 @@ import util.MockDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
@@ -81,83 +82,7 @@ import java.util.stream.Collectors;
 			args.stream().map(arg -> DynamicTest.dynamicTest(getMethodName(method, arg), () -> {
 					APIResponse<?> actualResponse = (APIResponse) method.invoke(API, arg);
 					actualResponse.waitForResponse();
-					MockResponse response = dispatcher.getLastResponse();
-					Assert.assertNotNull("mock response is null", response);
-
-					Assert.assertTrue("is complete returned false after waitForResponse", actualResponse.isComplete());
-					Assert.assertNotEquals("state is still IN_PROGRESS after waitForResponse",
-						APIResponse.State.IN_PROGRESS, actualResponse.getState());
-
-					Assert.assertFalse("got invalid api key, error stacktrace: "
-						+ getStackTrace(actualResponse.getError()), actualResponse.isInvalidAPIKey());
-
-					if (actualResponse.isFailure()) {
-						Object actualContent = actualResponse.getContent();
-						ErrorResponse actualErrorResponse = actualResponse.getErrorResponse();
-						Throwable actualError = actualResponse.getError();
-
-						Assert.assertTrue("isFailure returns true but state is not FAILURE",
-							actualResponse.getState() == APIResponse.State.FAILURE);
-
-						Assert.assertNull("failure response has content", actualContent);
-						Assert.assertNull("failure response has an error response", actualErrorResponse);
-						Assert.assertNotNull("failure response does not have an error exception", actualError);
-
-						Assert.fail("an error occurred while executing an api request, stacktrace: "
-							+ getStackTrace(actualError));
-					}
-
-					String expectedResponseCode = response.getStatus().split(" ")[1];
-					int actualResponseCode = actualResponse.getResponseCode();
-					Assert.assertEquals("response codes does not match",
-						expectedResponseCode, String.valueOf(actualResponseCode));
-
-					if (actualResponse.isSuccess()) {
-						Object actualContent = actualResponse.getContent();
-						ErrorResponse actualErrorResponse = actualResponse.getErrorResponse();
-						Throwable actualError = actualResponse.getError();
-
-						Assert.assertTrue("isSuccess returns true but state is not SUCCESS",
-							actualResponse.getState() == APIResponse.State.SUCCESS);
-						Assert.assertNotNull("success response does not have content", actualContent);
-						Assert.assertNull("success response has an error response", actualErrorResponse);
-						Assert.assertNull("success response has an error exception", actualError);
-
-						String expectedResponseJson = new String(response.getBody().clone().readByteArray(), "UTF-8");
-						Object expectedContent = Constants.GSON.fromJson(expectedResponseJson,
-							((ParameterizedType) method.getGenericReturnType()).getActualTypeArguments()[0]);
-						Assert.assertEquals("response content does not match", expectedContent, actualContent);
-
-						JsonElement expectedJsonElement = Constants.GSON.fromJson(expectedResponseJson, JsonElement.class);
-						JsonElement actualJsonElement = Constants.GSON.fromJson(Constants.GSON.toJson(actualContent), JsonElement.class);
-						assertEqualJsonElements(expectedJsonElement, actualJsonElement);
-						// TODO: find fields that may be null; assertNoNullFields(actualContent);
-					}
-
-					if (actualResponse.isAPIError()) {
-						Object actualContent = actualResponse.getContent();
-						ErrorResponse actualErrorResponse = actualResponse.getErrorResponse();
-						Throwable actualError = actualResponse.getError();
-
-						Assert.assertTrue("isAPIError returns true but state is not API_ERROR",
-							actualResponse.getState() == APIResponse.State.API_ERROR);
-
-						Assert.assertFalse("response code is 2xx but api error is set",
-							200 <= actualResponse.getResponseCode()
-								&& actualResponse.getResponseCode() < 300);
-
-						Assert.assertNull("api error response has content", actualContent);
-						Assert.assertNotNull("api error response does not have an error response", actualErrorResponse);
-						Assert.assertNull("api error response has an error exception", actualError);
-
-						ErrorResponse expectedErrorResponse = Constants.GSON.fromJson(new String(response.getBody().clone().readByteArray(), "UTF-8"),
-							ErrorResponse.class);
-						Assert.assertEquals("error response content does not match", expectedErrorResponse, actualErrorResponse);
-					}
-
-					if (actualResponse.isInvalidAPIKey()) {
-						Assert.fail("invalid api key triggered with valid api key: " + actualResponse);
-					}
+				validateResponse(dispatcher.getLastResponse(), actualResponse, method);
 				})
 			).forEach(tests::add);
 		}
@@ -231,10 +156,95 @@ import java.util.stream.Collectors;
 
 	}
 
+	private void validateResponse(MockResponse response, APIResponse<?> actualResponse, Method method) throws Throwable {
+		Assert.assertNotNull("mock response is null", response);
+
+		Assert.assertTrue("is complete returned false after waitForResponse", actualResponse.isComplete());
+		Assert.assertNotEquals("state is still IN_PROGRESS after waitForResponse",
+			APIResponse.State.IN_PROGRESS, actualResponse.getState());
+
+		Assert.assertFalse("got invalid api key, error stacktrace: "
+			+ getStackTrace(actualResponse.getError()), actualResponse.isInvalidAPIKey());
+
+		if (actualResponse.isFailure()) validateFailedRequest(actualResponse);
+
+		String expectedResponseCode = response.getStatus().split(" ")[1];
+		int actualResponseCode = actualResponse.getResponseCode();
+		Assert.assertEquals("response codes does not match",
+			expectedResponseCode, String.valueOf(actualResponseCode));
+
+		if (actualResponse.isSuccess()) validateSuccessfulRequest(response, actualResponse, method);
+
+		if (actualResponse.isAPIError()) validateAPIErrorResponse(response, actualResponse);
+
+		if (actualResponse.isInvalidAPIKey()) {
+			Assert.fail("invalid api key triggered with valid api key: " + actualResponse);
+		}
+	}
+
+	private void validateFailedRequest(APIResponse<?> actualResponse) {
+		Object actualContent = actualResponse.getContent();
+		ErrorResponse actualErrorResponse = actualResponse.getErrorResponse();
+		Throwable actualError = actualResponse.getError();
+
+		Assert.assertTrue("isFailure returns true but state is not FAILURE",
+			actualResponse.getState() == APIResponse.State.FAILURE);
+
+		Assert.assertNull("failure response has content", actualContent);
+		Assert.assertNull("failure response has an error response", actualErrorResponse);
+		Assert.assertNotNull("failure response does not have an error exception", actualError);
+
+		Assert.fail("an error occurred while executing an api request, stacktrace: "
+			+ getStackTrace(actualError));
+	}
+
+	private void validateSuccessfulRequest(MockResponse response, APIResponse<?> actualResponse, Method method) throws UnsupportedEncodingException {
+		Object actualContent = actualResponse.getContent();
+		ErrorResponse actualErrorResponse = actualResponse.getErrorResponse();
+		Throwable actualError = actualResponse.getError();
+
+		Assert.assertTrue("isSuccess returns true but state is not SUCCESS",
+			actualResponse.getState() == APIResponse.State.SUCCESS);
+		Assert.assertNotNull("success response does not have content", actualContent);
+		Assert.assertNull("success response has an error response", actualErrorResponse);
+		Assert.assertNull("success response has an error exception", actualError);
+
+		String expectedResponseJson = new String(response.getBody().clone().readByteArray(), "UTF-8");
+		Object expectedContent = Constants.GSON.fromJson(expectedResponseJson,
+			((ParameterizedType) method.getGenericReturnType()).getActualTypeArguments()[0]);
+		Assert.assertEquals("response content does not match", expectedContent, actualContent);
+
+		JsonElement expectedJsonElement = Constants.GSON.fromJson(expectedResponseJson, JsonElement.class);
+		JsonElement actualJsonElement = Constants.GSON.fromJson(Constants.GSON.toJson(actualContent), JsonElement.class);
+		assertEqualJsonElements(expectedJsonElement, actualJsonElement);
+		// TODO: find fields that may be null; assertNoNullFields(actualContent);
+	}
+
+	private void validateAPIErrorResponse(MockResponse response, APIResponse<?> actualResponse) throws UnsupportedEncodingException {
+		Object actualContent = actualResponse.getContent();
+		ErrorResponse actualErrorResponse = actualResponse.getErrorResponse();
+		Throwable actualError = actualResponse.getError();
+
+		Assert.assertTrue("isAPIError returns true but state is not API_ERROR",
+			actualResponse.getState() == APIResponse.State.API_ERROR);
+
+		Assert.assertFalse("response code is 2xx but api error is set",
+			200 <= actualResponse.getResponseCode()
+				&& actualResponse.getResponseCode() < 300);
+
+		Assert.assertNull("api error response has content", actualContent);
+		Assert.assertNotNull("api error response does not have an error response", actualErrorResponse);
+		Assert.assertNull("api error response has an error exception", actualError);
+
+		ErrorResponse expectedErrorResponse = Constants.GSON.fromJson(new String(response.getBody().clone().readByteArray(), "UTF-8"),
+			ErrorResponse.class);
+		Assert.assertEquals("error response content does not match", expectedErrorResponse, actualErrorResponse);
+	}
+
 	private int getIndex(Parameter[] parameters, Class<? extends Annotation> targetAnnotation, Class<?> targetType) {
-		targetType = ClassUtils.primitiveToWrapper(targetType);
+		Class<?> wrappedType = ClassUtils.primitiveToWrapper(targetType);
 		for (int i = 0; i < parameters.length; i++) {
-			if (targetType.isAssignableFrom(ClassUtils.primitiveToWrapper(parameters[i].getType()))
+			if (wrappedType.isAssignableFrom(ClassUtils.primitiveToWrapper(parameters[i].getType()))
 				&& parameters[i].isAnnotationPresent(targetAnnotation)) return i;
 
 		}
@@ -260,7 +270,7 @@ import java.util.stream.Collectors;
 	}
 
 	private String getStackTrace(Throwable t) {
-		if (t ==  null) return "throwable is null";
+		if (t == null) return "throwable is null";
 		StringWriter stringWriter = new StringWriter();
 		t.printStackTrace(new PrintWriter(stringWriter));
 		return stringWriter.toString();
@@ -273,80 +283,82 @@ import java.util.stream.Collectors;
 	private void assertEqualJsonElements(JsonElement expected, JsonElement actual, String path) {
 		if (expected == null) {
 			Assert.assertNull("expected is null actual not", actual);
+			return;
 		}
 
 		Assert.assertEquals("wrong element type at " + path, getJsonType(expected), getJsonType(actual));
 		if (expected.isJsonNull()) return;
-		if (expected.isJsonArray()) {
-			JsonArray expectedArray = expected.getAsJsonArray();
-			JsonArray actualArray = actual.getAsJsonArray();
 
-			Assert.assertEquals("json array at " + path + " has wrong length",
-				expectedArray.size(), actualArray.size());
+		if (expected.isJsonArray()) assertEqualsJsonArray(expected.getAsJsonArray(), actual.getAsJsonArray(), path);
 
-			for (int i = 0; i < expectedArray.size(); i++)
-				assertEqualJsonElements(expectedArray.get(i), actualArray.get(i), path + "[" + i + "]");
+		if (expected.isJsonObject()) assertEqualsJsonObject(expected.getAsJsonObject(), actual.getAsJsonObject(), path);
+
+		if (expected.isJsonPrimitive())
+			assertEqualsJsonPrimitive(expected.getAsJsonPrimitive(), actual.getAsJsonPrimitive(), path);
+	}
+
+	private void assertEqualsJsonArray(JsonArray expectedArray, JsonArray actualArray, String path) {
+		Assert.assertEquals("json array at " + path + " has wrong length",
+			expectedArray.size(), actualArray.size());
+
+		for (int i = 0; i < expectedArray.size(); i++)
+			assertEqualJsonElements(expectedArray.get(i), actualArray.get(i), path + "[" + i + "]");
+	}
+
+	private void assertEqualsJsonObject(JsonObject expectedObject, JsonObject actualObject, String path) {
+		for (Map.Entry<String, JsonElement> expectedEntry : expectedObject.entrySet()) {
+			String expectedKey = expectedEntry.getKey();
+			JsonElement expectedValue = expectedEntry.getValue();
+
+			String entryPath = path + "[" + expectedKey + "]";
+
+
+			JsonElement actualValue = actualObject.get(expectedKey);
+			if (expectedValue == null) continue;
+			Assert.assertNotNull("missing key at path " + entryPath +
+				" of type " + getJsonType(expectedValue) + ", expected value " +
+				expectedValue + ", enclosing object: " + expectedObject, actualValue);
+
+			assertEqualJsonElements(expectedValue, actualValue, entryPath);
 		}
 
-		if (expected.isJsonObject()) {
-			JsonObject expectedObject = expected.getAsJsonObject();
-			JsonObject actualObject = actual.getAsJsonObject();
+		for (Map.Entry<String, JsonElement> actualEntry : actualObject.entrySet()) {
+			JsonElement actualValue = actualEntry.getValue();
+			if (actualValue == null) continue;
+			String actualKey = actualEntry.getKey();
+			JsonElement expectedValue = expectedObject.get(actualKey);
 
-			for (Map.Entry<String, JsonElement> expectedEntry : expectedObject.entrySet()) {
-				String expectedKey = expectedEntry.getKey();
-				JsonElement expectedValue = expectedEntry.getValue();
-
-				String entryPath = path + "[" + expectedKey + "]";
-
-
-				JsonElement actualValue = actualObject.get(expectedKey);
-				if (expectedValue == null) continue;
-				Assert.assertNotNull("missing key at path " + entryPath +
-					" of type " + getJsonType(expectedValue) + ", expected value " +
-					expectedValue + ", enclosing object: " + expectedObject, actualValue);
-
-				assertEqualJsonElements(expectedValue, actualValue, entryPath);
-			}
-
-			for (Map.Entry<String, JsonElement> actualEntry : actualObject.entrySet()) {
-				JsonElement actualValue = actualEntry.getValue();
-				if (actualValue == null) continue;
-				String actualKey = actualEntry.getKey();
-				JsonElement expectedValue = expectedObject.get(actualKey);
-
-				Assert.assertNotNull("unknown key " + path + "[" + actualKey + "] of type " +
-					getJsonType(actualValue) + " with value " +
-					actualValue + " present, enclosing object: " + actualObject, expectedValue);
-			}
+			Assert.assertNotNull("unknown key " + path + "[" + actualKey + "] of type " +
+				getJsonType(actualValue) + " with value " +
+				actualValue + " present, enclosing object: " + actualObject, expectedValue);
 		}
+	}
 
-		if (expected.isJsonPrimitive()) {
-			JsonPrimitive expectedPrimitive = expected.getAsJsonPrimitive();
-			JsonPrimitive actualPrimitive = actual.getAsJsonPrimitive();
-
-			if (expectedPrimitive.isString()) {
-				Assert.assertEquals("strings at " + path + " do not match",
-					expectedPrimitive.getAsString(), actualPrimitive.getAsString());
-			}
-			if (expectedPrimitive.isBoolean()) {
-				Assert.assertEquals("booleans at " + path + " do not match",
-					expectedPrimitive.getAsBoolean(), actualPrimitive.getAsBoolean());
-			}
-			if (expectedPrimitive.isNumber()) {
-				boolean equal = expectedPrimitive.getAsBigDecimal().compareTo(actualPrimitive.getAsBigDecimal()) == 0;
-				Assert.assertTrue("numbers at " + path + " do not match expected <" +
-						expectedPrimitive.getAsBigDecimal() + "> but was:<" +
-						actualPrimitive.getAsBigDecimal() + ">",
-					equal);
-			}
+	private void assertEqualsJsonPrimitive(JsonPrimitive expectedPrimitive, JsonPrimitive actualPrimitive, String path) {
+		if (expectedPrimitive.isString()) {
+			Assert.assertEquals("strings at " + path + " do not match",
+				expectedPrimitive.getAsString(), actualPrimitive.getAsString());
 		}
+		if (expectedPrimitive.isBoolean()) {
+			Assert.assertEquals("booleans at " + path + " do not match",
+				expectedPrimitive.getAsBoolean(), actualPrimitive.getAsBoolean());
+		}
+		if (expectedPrimitive.isNumber()) {
+			boolean equal = expectedPrimitive.getAsBigDecimal().compareTo(actualPrimitive.getAsBigDecimal()) == 0;
+			Assert.assertTrue("numbers at " + path + " do not match expected <" +
+					expectedPrimitive.getAsBigDecimal() + "> but was:<" +
+					actualPrimitive.getAsBigDecimal() + ">",
+				equal);
+		}
+		Assert.assertEquals("expected primitive (" + expectedPrimitive + ") and actual primitive (" +
+			actualPrimitive + ") at " + path + " are not equal; ", expectedPrimitive, actualPrimitive);
 	}
 
 	@Test
 	void testObjectMethodOnApi() {
 		//noinspection ResultOfMethodCallIgnored
 		new ChampionGGAPIFactory(Constants.API_KEY, 10)
-				.buildChampionGGAPI().getClass();
+			.buildChampionGGAPI().getClass();
 	}
 
 	private String getJsonType(JsonElement element) {
