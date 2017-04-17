@@ -7,7 +7,7 @@
 	<groupId>com.lvack</groupId>
 	<artifactId>champion-gg-wrapper</artifactId>
 	<packaging>jar</packaging>
-	<version>1.0-beta-02</version>
+	<version>1.0</version>
 
 	<name>${project.groupId}:${project.artifactId}</name>
 	<description>A simple Java wrapper for the ChampionGG API (http://api.champion.gg/docs/)</description>
