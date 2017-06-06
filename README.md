@@ -6,7 +6,7 @@
 [![License](https://img.shields.io/github/license/LogicalOverflow/java-champion-gg-wrapper.svg?style=flat-square)](https://github.com/LogicalOverflow/java-champion-gg-wrapper/blob/master/LICENSE)
 
 # java-champion-gg-wrapper
-A simple Java wrapper for the ChampionGG API (http://api.champion.gg/docs/). This wrapper is not yet updated for Version 2.0.0 of the ChampionGG API. I will do this in the near future.
+A simple Java wrapper for the ChampionGG API (http://api.champion.gg/docs/). This wrapper is not yet updated for Version 2.0.0 of the ChampionGG API. I will do this some time. Currently the API documentation is missing some information and because of this, the updating process is taking quite some time.
 
 ## Features
 * Automatic rate limiting: All API calles can easily be rate limited. All API instances created with the same factory share one rate limiter. The number of requests per second can freely be set as the second parameter of the factory constructor. A value of 0 or a negative value disables the rate limiting. The default is no rate limiting.
